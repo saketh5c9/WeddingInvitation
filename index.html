@@ -1,13 +1,730 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sai Teja & Sahithi — Wedding Invitation</title>
+  <meta name="description" content="You are warmly invited to the wedding celebration of Sai Teja and Sahithi on May 6th, 2026 at RR Gardens, Godhavarikhani." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:  { 50: '#FFFDF7', 100: '#FFF9E8', 200: '#FFF3D0', 300: '#FFECB3' },
+            gold:   { 300: '#FFD97D', 400: '#F5C451', 500: '#D4A745', 600: '#B8860B', 700: '#8B6914', 800: '#6B4F10' },
+            blush:  { 100: '#FFF0F0', 200: '#FFE0E0', 300: '#F5C6C6' },
+            sage:   { 100: '#F0F5ED', 200: '#D4E4CC', 300: '#B8D4A8' },
+          },
+          fontFamily: {
+            serif:  ['"Playfair Display"', 'Georgia', 'serif'],
+            sans:   ['"Inter"', 'system-ui', 'sans-serif'],
+            script: ['"Great Vibes"', 'cursive'],
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'shimmer': 'shimmer 2.5s ease-in-out infinite',
+            'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+            'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+            'sparkle': 'sparkle 1.5s ease-in-out infinite',
+          },
+          keyframes: {
+            float:     { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+            shimmer:   { '0%,100%': { opacity: '1' }, '50%': { opacity: '0.7' } },
+            fadeInUp:  { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            pulseSoft: { '0%,100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.05)' } },
+            sparkle:   { '0%,100%': { opacity: '0.4', transform: 'scale(0.8)' }, '50%': { opacity: '1', transform: 'scale(1.2)' } },
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; }
+    ::selection { background: #F5C451; color: #3d2e0a; }
+
+    /* ── Wedding Card Opening Animation ── */
+    #card-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #FFFDF7 0%, #FFF9E8 50%, #FFF3D0 100%);
+      perspective: 1200px;
+      transition: opacity 0.8s ease;
+    }
+    #card-overlay.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .card-envelope {
+      position: relative;
+      width: 300px; height: 400px;
+    }
+    @media (min-width: 640px) {
+      .card-envelope { width: 380px; height: 500px; }
+    }
+
+    /* Back panel of the card */
+    .card-back {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #D4A745 0%, #F5C451 50%, #D4A745 100%);
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(139,105,20,0.3);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-back-inner {
+      text-align: center; color: #FFFDF7;
+    }
+
+    /* Front flap of the card that opens upward */
+    .card-flap {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, #B8860B 0%, #D4A745 40%, #F5C451 100%);
+      border-radius: 16px;
+      transform-origin: bottom center;
+      animation: flapOpen 1.8s ease-in-out 1s forwards;
+      z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 -4px 20px rgba(139,105,20,0.2);
+    }
+    .card-flap::before {
+      content: '';
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 40px solid transparent;
+      border-right: 40px solid transparent;
+      border-bottom: 30px solid rgba(255,255,255,0.1);
+    }
+
+    @keyframes flapOpen {
+      0%   { transform: rotateX(0deg); }
+      60%  { transform: rotateX(-170deg); }
+      80%  { transform: rotateX(-160deg); }
+      100% { transform: rotateX(-175deg); opacity: 0.3; }
+    }
+
+    /* Seal on the flap */
+    .card-seal {
+      width: 70px; height: 70px;
+      background: radial-gradient(circle, #FFD97D 0%, #D4A745 60%, #8B6914 100%);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 15px rgba(139,105,20,0.4), inset 0 2px 4px rgba(255,255,255,0.3);
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8rem; color: #FFFDF7;
+      animation: sealBreak 0.5s ease-in-out 1s forwards;
+    }
+    @keyframes sealBreak {
+      0%   { transform: scale(1); opacity: 1; }
+      50%  { transform: scale(1.3); opacity: 0.8; }
+      100% { transform: scale(0.5) rotate(20deg); opacity: 0; }
+    }
+
+    /* Content that rises from the card */
+    .card-content-rise {
+      opacity: 0;
+      transform: translateY(40px) scale(0.9);
+      animation: contentRise 1.2s ease-out 2.2s forwards;
+    }
+    @keyframes contentRise {
+      0%   { opacity: 0; transform: translateY(40px) scale(0.9); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Particles that burst from the card */
+    .card-particle {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      opacity: 0;
+      animation: particleBurst 1.5s ease-out 1.8s forwards;
+    }
+    @keyframes particleBurst {
+      0%   { opacity: 1; transform: translate(0,0) scale(1); }
+      100% { opacity: 0; transform: var(--particle-end) scale(0); }
+    }
+
+    /* Floating sparkle dots on the overlay */
+    .overlay-sparkle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      animation: overlaySparkle 2s ease-in-out infinite;
+    }
+    @keyframes overlaySparkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50%      { opacity: 0.6; transform: scale(1.2); }
+    }
+
+    /* ── Decorative floating petals ── */
+    .petal {
+      position: fixed; pointer-events: none; z-index: 0; opacity: 0;
+      animation: petalFall linear infinite;
+    }
+    @keyframes petalFall {
+      0%   { opacity: 0; transform: translateY(-10vh) rotate(0deg); }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.7; }
+      100% { opacity: 0; transform: translateY(110vh) rotate(720deg); }
+    }
+
+    /* ── Scroll-triggered fade-in ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Gold divider ── */
+    .gold-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #D4A745, transparent);
+    }
+
+    /* ── Card hover ── */
+    .event-card {
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .event-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(212,167,69,0.18);
+    }
+
+    /* ── Countdown ── */
+    .countdown-block { perspective: 600px; }
+    .countdown-digit { transition: transform 0.3s ease; }
+
+    /* ── Celebration state ── */
+    .celebration-text {
+      background: linear-gradient(135deg, #D4A745, #FFD97D, #D4A745);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 3s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ── Confetti canvas ── */
+    #confetti-canvas {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 9998;
+    }
+
+    /* ── Navbar blur ── */
+    .nav-blur {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* ── Map button shimmer ── */
+    .map-btn::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent);
+      transition: left 0.6s ease;
+    }
+    .map-btn:hover::after { left: 100%; }
+
+    /* ── Custom scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #FFFDF7; }
+    ::-webkit-scrollbar-thumb { background: #D4A745; border-radius: 3px; }
+
+    /* ── Telugu font sizing ── */
+    [data-lang="te"] .te-adjust { font-size: 0.95em; }
+
+    /* ── Location link inside event cards ── */
+    .venue-link {
+      transition: all 0.25s ease;
+    }
+    .venue-link:hover {
+      background-color: rgba(212,167,69,0.15);
+    }
+  </style>
 </head>
-<body>
-    <h1>Welcome to the Wedding</h1>
-    <p>Join us for the Haldi ceremony at <a href="https://maps.app.goo.gl/YRGfqiQV3Bwp7m5K6?g_st=aw">Haldi Location</a>.</p>
-    <p>The Wedding Ceremony will take place at <a href="https://maps.app.goo.gl/ZJX4xpG29XhFcUZV7?g_st=aw">Wedding Ceremony Location</a>.</p>
+
+<body class="bg-cream-50 text-gray-800 overflow-x-hidden" data-lang="en">
+
+  <!-- ════════════════════════════════════════════
+       WEDDING CARD OPENING ANIMATION
+  ════════════════════════════════════════════ -->
+  <div id="card-overlay">
+    <!-- Background sparkles -->
+    <div class="overlay-sparkle w-2 h-2 bg-gold-400" style="top:10%;left:15%;animation-delay:0s"></div>
+    <div class="overlay-sparkle w-1.5 h-1.5 bg-gold-300" style="top:25%;right:20%;animation-delay:0.4s"></div>
+    <div class="overlay-sparkle w-2 h-2 bg-blush-300" style="top:60%;left:10%;animation-delay:0.8s"></div>
+    <div class="overlay-sparkle w-1 h-1 bg-gold-500" style="top:75%;right:15%;animation-delay:1.2s"></div>
+    <div class="overlay-sparkle w-1.5 h-1.5 bg-sage-300" style="bottom:15%;left:25%;animation-delay:0.6s"></div>
+    <div class="overlay-sparkle w-2 h-2 bg-gold-400" style="top:40%;right:10%;animation-delay:1s"></div>
+
+    <div class="card-envelope">
+      <!-- Back panel with invitation content -->
+      <div class="card-back">
+        <div class="card-back-inner card-content-rise px-6">
+          <p class="text-sm tracking-[0.25em] uppercase opacity-80 mb-3" style="font-family:'Inter',sans-serif">You are invited to</p>
+          <p class="font-script text-4xl sm:text-5xl mb-1" style="font-family:'Great Vibes',cursive">Sai Teja</p>
+          <p class="font-script text-2xl opacity-80 my-1" style="font-family:'Great Vibes',cursive">&</p>
+          <p class="font-script text-4xl sm:text-5xl mb-4" style="font-family:'Great Vibes',cursive">Sahithi</p>
+          <div class="w-16 h-px bg-white/40 mx-auto mb-3"></div>
+          <p class="text-sm opacity-90" style="font-family:'Playfair Display',serif">May 6, 2026</p>
+          <p class="text-xs opacity-70 mt-1" style="font-family:'Inter',sans-serif">RR Gardens, Godhavarikhani</p>
+        </div>
+      </div>
+
+      <!-- Front flap with seal -->
+      <div class="card-flap">
+        <div class="card-seal">S&S</div>
+      </div>
+
+      <!-- Burst particles -->
+      <div class="card-particle bg-gold-400" style="top:50%;left:50%;--particle-end:translate(-80px,-120px)"></div>
+      <div class="card-particle bg-blush-300" style="top:50%;left:50%;--particle-end:translate(90px,-100px)"></div>
+      <div class="card-particle bg-gold-300" style="top:50%;left:50%;--particle-end:translate(-60px,80px)"></div>
+      <div class="card-particle bg-sage-300" style="top:50%;left:50%;--particle-end:translate(70px,90px)"></div>
+      <div class="card-particle bg-gold-500" style="top:50%;left:50%;--particle-end:translate(-110px,20px)"></div>
+      <div class="card-particle bg-blush-200" style="top:50%;left:50%;--particle-end:translate(100px,-30px)"></div>
+      <div class="card-particle bg-gold-400" style="top:50%;left:50%;--particle-end:translate(0px,-130px)"></div>
+      <div class="card-particle bg-sage-200" style="top:50%;left:50%;--particle-end:translate(-30px,120px)"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Floating Petals (decorative background)
+  ════════════════════════════════════════════ -->
+  <div id="petals-container" class="fixed inset-0 pointer-events-none z-0" aria-hidden="true"></div>
+
+  <!-- ════════════════════════════════════════════
+       Navigation + Language Toggle
+  ════════════════════════════════════════════ -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 nav-blur bg-cream-50/80 border-b border-gold-300/30 transition-all duration-300">
+    <div class="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
+      <a href="#hero" class="font-script text-2xl text-gold-600 hover:text-gold-700 transition-colors">S &amp; S</a>
+
+      <div class="hidden sm:flex items-center gap-6 text-sm font-medium text-gray-600">
+        <a href="#events" class="hover:text-gold-600 transition-colors" data-en="Events" data-te="కార్యక్రమాలు">Events</a>
+      </div>
+
+      <button id="lang-toggle" class="flex items-center gap-1 px-3 py-1.5 rounded-full border-2 border-gold-400 text-sm font-semibold text-gold-700 hover:bg-gold-400 hover:text-white transition-all duration-300 select-none" aria-label="Toggle Language">
+        <span id="lang-label">EN</span>
+        <span class="text-gold-300">|</span>
+        <span id="lang-label-alt" class="opacity-50">తె</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════════════ -->
+  <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20 pb-12">
+    <!-- Decorative sparkle elements -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div class="absolute top-20 left-10 w-2 h-2 bg-gold-400 rounded-full animate-sparkle"></div>
+      <div class="absolute top-32 right-16 w-1.5 h-1.5 bg-gold-300 rounded-full animate-sparkle" style="animation-delay:0.5s"></div>
+      <div class="absolute top-48 left-1/4 w-1 h-1 bg-gold-500 rounded-full animate-sparkle" style="animation-delay:1s"></div>
+      <div class="absolute bottom-40 right-1/3 w-2 h-2 bg-gold-400 rounded-full animate-sparkle" style="animation-delay:0.8s"></div>
+      <div class="absolute bottom-24 left-20 w-1.5 h-1.5 bg-gold-300 rounded-full animate-sparkle" style="animation-delay:1.2s"></div>
+    </div>
+
+    <p class="text-gold-600 tracking-[0.3em] uppercase text-xs sm:text-sm font-medium mb-6 animate-fade-in-up" data-en="Two Souls, Destined To Meet" data-te="విధి కలిపిన జంట">Two Souls, Destined To Meet</p>
+
+    <!-- Couple Photo -->
+    <div class="w-48 h-48 sm:w-60 sm:h-60 rounded-full border-4 border-gold-400 shadow-lg shadow-gold-300/20 mb-8 animate-float overflow-hidden">
+      <img src="Image 1.jpeg" alt="Sai Teja & Sahithi" class="w-full h-full object-cover" />
+    </div>
+
+    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl text-gray-800 leading-tight mb-2">
+      <span class="block" data-en="Sai Teja" data-te="సాయి తేజ">Sai Teja</span>
+      <span class="font-script text-gold-500 text-3xl sm:text-4xl my-2 block">&amp;</span>
+      <span class="block" data-en="Sahithi" data-te="సహితి">Sahithi</span>
+    </h1>
+
+    <p class="mt-4 text-gray-500 font-light text-sm sm:text-base max-w-md" data-en="Request the honour of your gracious presence at their wedding celebration" data-te="వారి శుభ వివాహ వేడుకకు మీ సాన్నిధ్యం, ఆశీస్సులు కోరుతున్నాము">Request the honour of your gracious presence at their wedding celebration</p>
+
+    <div class="mt-8 flex items-center gap-3">
+      <div class="h-px w-8 sm:w-12 bg-gold-400"></div>
+      <p class="text-gold-700 font-serif text-lg sm:text-xl font-medium tracking-wide" data-en="May 6, 2026" data-te="మే 6, 2026">May 6, 2026</p>
+      <div class="h-px w-8 sm:w-12 bg-gold-400"></div>
+    </div>
+
+    <div class="absolute bottom-6 flex flex-col items-center gap-1 text-gold-400 animate-pulse-soft">
+      <span class="text-xs tracking-widest uppercase" data-en="Scroll" data-te="క్రిందకు చూడండి">Scroll</span>
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       COUNTDOWN TIMER
+  ════════════════════════════════════════════ -->
+  <section id="countdown-section" class="relative py-16 bg-gradient-to-b from-cream-100 to-cream-50">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <h2 class="font-serif text-2xl sm:text-3xl text-gray-800 mb-2 reveal" data-en="Counting Down To Forever" data-te="శుభ ముహూర్తానికి ఎదురుచూస్తూ...">Counting Down To Forever</h2>
+      <div class="gold-divider w-24 mx-auto mb-10 reveal"></div>
+
+      <div id="countdown" class="flex items-center justify-center gap-3 sm:gap-5 reveal">
+        <div class="countdown-block text-center">
+          <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg shadow-gold-300/10 border border-gold-200/50 w-[72px] h-[80px] sm:w-[90px] sm:h-[96px] flex items-center justify-center">
+            <span id="cd-days" class="countdown-digit font-serif text-3xl sm:text-4xl text-gold-700 font-bold">--</span>
+          </div>
+          <p class="mt-2 text-xs sm:text-sm text-gray-500 font-medium tracking-wide te-adjust" data-en="Days" data-te="రోజులు">Days</p>
+        </div>
+        <span class="text-gold-400 text-2xl font-light mb-6 animate-shimmer">:</span>
+        <div class="countdown-block text-center">
+          <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg shadow-gold-300/10 border border-gold-200/50 w-[72px] h-[80px] sm:w-[90px] sm:h-[96px] flex items-center justify-center">
+            <span id="cd-hours" class="countdown-digit font-serif text-3xl sm:text-4xl text-gold-700 font-bold">--</span>
+          </div>
+          <p class="mt-2 text-xs sm:text-sm text-gray-500 font-medium tracking-wide te-adjust" data-en="Hours" data-te="గంటలు">Hours</p>
+        </div>
+        <span class="text-gold-400 text-2xl font-light mb-6 animate-shimmer" style="animation-delay:0.3s">:</span>
+        <div class="countdown-block text-center">
+          <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg shadow-gold-300/10 border border-gold-200/50 w-[72px] h-[80px] sm:w-[90px] sm:h-[96px] flex items-center justify-center">
+            <span id="cd-mins" class="countdown-digit font-serif text-3xl sm:text-4xl text-gold-700 font-bold">--</span>
+          </div>
+          <p class="mt-2 text-xs sm:text-sm text-gray-500 font-medium tracking-wide te-adjust" data-en="Minutes" data-te="నిమిషాలు">Minutes</p>
+        </div>
+        <span class="text-gold-400 text-2xl font-light mb-6 animate-shimmer" style="animation-delay:0.6s">:</span>
+        <div class="countdown-block text-center">
+          <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg shadow-gold-300/10 border border-gold-200/50 w-[72px] h-[80px] sm:w-[90px] sm:h-[96px] flex items-center justify-center">
+            <span id="cd-secs" class="countdown-digit font-serif text-3xl sm:text-4xl text-gold-700 font-bold">--</span>
+          </div>
+          <p class="mt-2 text-xs sm:text-sm text-gray-500 font-medium tracking-wide te-adjust" data-en="Seconds" data-te="సెకన్లు">Seconds</p>
+        </div>
+      </div>
+
+      <div id="celebration-msg" class="hidden mt-6">
+        <h3 class="celebration-text font-script text-4xl sm:text-5xl mb-2">🎉</h3>
+        <p class="celebration-text font-serif text-2xl sm:text-3xl font-bold" data-en="The Celebration Begins!" data-te="శుభ వేళ వచ్చేసింది!">The Celebration Begins!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       EVENTS — Cards with full venue details
+  ════════════════════════════════════════════ -->
+  <section id="events" class="relative py-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-serif text-2xl sm:text-3xl text-center text-gray-800 mb-2 reveal" data-en="Wedding Events" data-te="శుభ కార్యక్రమాలు">Wedding Events</h2>
+      <div class="gold-divider w-24 mx-auto mb-14 reveal"></div>
+
+      <!-- Event cards grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+
+        <!-- ─── Haldi ─── -->
+        <div class="reveal">
+          <div class="event-card bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-7 border border-gold-200/40 shadow-md shadow-gold-200/10 h-full flex flex-col">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="text-2xl">🌼</span>
+              <h3 class="font-serif text-xl text-gold-700 font-semibold" data-en="Haldi" data-te="మంగళ స్నానాలు">Haldi</h3>
+            </div>
+            <!-- Date & Time -->
+            <div class="flex items-center gap-2 mb-2">
+              <svg class="w-4 h-4 text-gold-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+              <p class="text-sm text-gray-600 font-medium" data-en="May 4, 2026 &bull; 11:00 AM" data-te="మే 4, 2026 &bull; ఉదయం 11:00">May 4, 2026 &bull; 11:00 AM</p>
+            </div>
+            <!-- Venue Name -->
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-4 h-4 text-gold-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+              <p class="text-sm text-gray-600 font-medium" data-en="Meru Bhavan" data-te="మేరు భవన్">Meru Bhavan</p>
+            </div>
+            <!-- Description -->
+            <p class="text-sm text-gray-400 mt-2 mb-4 flex-grow" data-en="The auspicious turmeric ceremony to bless the couple." data-te="వధూవరులకు పసుపు పూసి ఆశీర్వదించే శుభ తంతు.">The auspicious turmeric ceremony to bless the couple.</p>
+            <!-- Location Link -->
+            <a href="https://share.google/AcnqA5nmy8D8jgAQq" target="_blank" rel="noopener noreferrer"
+               class="venue-link map-btn relative overflow-hidden inline-flex items-center justify-center gap-2 bg-gold-400/10 hover:bg-gold-400/20 text-gold-700 font-medium text-sm px-4 py-2.5 rounded-xl border border-gold-300/40 transition-all duration-300">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+              <span data-en="Get Directions" data-te="మ్యాప్ లో చూడండి">Get Directions</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ─── Wedding ─── -->
+        <div class="reveal" style="transition-delay:0.15s">
+          <div class="event-card bg-gradient-to-br from-gold-300/20 to-cream-100 backdrop-blur-sm rounded-2xl p-6 sm:p-7 border-2 border-gold-400/60 shadow-lg shadow-gold-300/20 h-full flex flex-col ring-1 ring-gold-300/30">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-2xl">💍</span>
+              <h3 class="font-serif text-xl text-gold-700 font-bold" data-en="Wedding Ceremony" data-te="శుభ వివాహం">Wedding Ceremony</h3>
+            </div>
+            <div class="inline-block bg-gold-400/20 text-gold-800 text-[10px] font-semibold px-2.5 py-0.5 rounded-full mb-4 w-fit" data-en="✨ Main Event" data-te="✨ ముఖ్య ఘట్టం">✨ Main Event</div>
+            <!-- Date & Time -->
+            <div class="flex items-center gap-2 mb-2">
+              <svg class="w-4 h-4 text-gold-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+              <p class="text-sm text-gold-700 font-semibold" data-en="May 6, 2026 &bull; 9:15 AM" data-te="మే 6, 2026 &bull; ఉదయం 9:15">May 6, 2026 &bull; 9:15 AM</p>
+            </div>
+            <!-- Venue Name -->
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-4 h-4 text-gold-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+              <p class="text-sm text-gray-600 font-medium" data-en="RR Gardens" data-te="ఆర్.ఆర్. గార్డెన్స్">RR Gardens</p>
+            </div>
+            <p class="text-xs text-gray-400 ml-6 mb-1" data-en="FCI Road, Godhavarikhani" data-te="FCI రోడ్, గోదావరిఖని">FCI Road, Godhavarikhani</p>
+            <!-- Description -->
+            <p class="text-sm text-gray-500 mt-2 mb-4 flex-grow" data-en="The sacred ceremony uniting two hearts forever." data-te="ఏడు అడుగులతో జీవితాంతం కలిసి నడిచే బంధం.">The sacred ceremony uniting two hearts forever.</p>
+            <!-- Location Link -->
+            <a href="https://share.google/0YjUHzqbNZvz5pYn6" target="_blank" rel="noopener noreferrer"
+               class="venue-link map-btn relative overflow-hidden inline-flex items-center justify-center gap-2 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white font-semibold text-sm px-4 py-2.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+              <span data-en="Open in Google Maps" data-te="మ్యాప్ లో చూడండి">Open in Google Maps</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ─── Reception ─── -->
+        <div class="reveal" style="transition-delay:0.3s">
+          <div class="event-card bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-7 border border-gold-200/40 shadow-md shadow-gold-200/10 h-full flex flex-col">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="text-2xl">🥂</span>
+              <h3 class="font-serif text-xl text-gold-700 font-semibold" data-en="Reception" data-te="రిసెప్షన్">Reception</h3>
+            </div>
+            <!-- Date & Time -->
+            <div class="flex items-center gap-2 mb-2">
+              <svg class="w-4 h-4 text-gold-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+              <p class="text-sm text-gray-600 font-medium" data-en="May 8, 2026" data-te="మే 8, 2026">May 8, 2026</p>
+            </div>
+            <!-- Venue Name -->
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-4 h-4 text-gold-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+              <p class="text-sm text-gray-600 font-medium" data-en="Jagityal" data-te="జగిత్యాల">Jagityal</p>
+            </div>
+            <!-- Description -->
+            <p class="text-sm text-gray-400 mt-2 mb-4 flex-grow" data-en="A grand dinner reception to celebrate the newlyweds." data-te="నవ దంపతులను ఆశీర్వదించే ఘన సన్మాన సభ.">A grand dinner reception to celebrate the newlyweds.</p>
+            <!-- Venue details TBA -->
+            <div class="inline-flex items-center justify-center gap-1.5 bg-cream-200/60 text-gray-500 text-xs font-medium px-4 py-2.5 rounded-xl border border-gold-200/30">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span data-en="Venue details coming soon" data-te="స్థల వివరాలు త్వరలో తెలియజేయబడును">Venue details coming soon</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <footer class="py-12 bg-gradient-to-b from-cream-50 to-cream-200 text-center px-4">
+    <div class="gold-divider w-32 mx-auto mb-8"></div>
+    <p class="font-script text-3xl sm:text-4xl text-gold-600 mb-3">Sai Teja &amp; Sahithi</p>
+    <p class="text-sm text-gray-400" data-en="May 6, 2026 &bull; RR Gardens, Godhavarikhani" data-te="మే 6, 2026 &bull; ఆర్.ఆర్. గార్డెన్స్, గోదావరిఖని">May 6, 2026 &bull; RR Gardens, Godhavarikhani</p>
+    <p class="text-xs text-gray-300 mt-6" data-en="Made with ❤️" data-te="ప్రేమతో ❤️">Made with ❤️</p>
+  </footer>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- ════════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════════ -->
+  <script>
+    // ─────────────────────────────────────────
+    // 0. WEDDING CARD OPENING ANIMATION
+    // ─────────────────────────────────────────
+    const overlay = document.getElementById('card-overlay');
+
+    function dismissCard() {
+      overlay.classList.add('fade-out');
+      document.body.style.overflow = '';
+      setTimeout(() => { overlay.style.display = 'none'; }, 900);
+    }
+
+    // Prevent scrolling while card is visible
+    document.body.style.overflow = 'hidden';
+
+    // Auto-dismiss: flap opens ~1-2.8s, content rises ~2.2-3.4s, linger ~1s, then fade
+    setTimeout(dismissCard, 4200);
+
+    // ─────────────────────────────────────────
+    // 1. LANGUAGE TOGGLE
+    // ─────────────────────────────────────────
+    const langToggle = document.getElementById('lang-toggle');
+    const langLabel = document.getElementById('lang-label');
+    const langLabelAlt = document.getElementById('lang-label-alt');
+    let currentLang = 'en';
+
+    langToggle.addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'te' : 'en';
+      document.body.setAttribute('data-lang', currentLang);
+
+      if (currentLang === 'te') {
+        langLabel.textContent = 'తె';
+        langLabelAlt.textContent = 'EN';
+      } else {
+        langLabel.textContent = 'EN';
+        langLabelAlt.textContent = 'తె';
+      }
+
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = el.getAttribute(`data-${currentLang}`);
+        if (text) el.innerHTML = text;
+      });
+    });
+
+    // ─────────────────────────────────────────
+    // 2. COUNTDOWN TIMER
+    // ─────────────────────────────────────────
+    const weddingDate = new Date('2026-05-06T09:15:00+05:30').getTime();
+    const cdDays = document.getElementById('cd-days');
+    const cdHours = document.getElementById('cd-hours');
+    const cdMins = document.getElementById('cd-mins');
+    const cdSecs = document.getElementById('cd-secs');
+    const countdownEl = document.getElementById('countdown');
+    const celebrationMsg = document.getElementById('celebration-msg');
+
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = weddingDate - now;
+
+      if (diff <= 0) {
+        countdownEl.classList.add('hidden');
+        celebrationMsg.classList.remove('hidden');
+        launchConfetti();
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+      cdDays.textContent = String(days).padStart(2, '0');
+      cdHours.textContent = String(hours).padStart(2, '0');
+      cdMins.textContent = String(mins).padStart(2, '0');
+      cdSecs.textContent = String(secs).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ─────────────────────────────────────────
+    // 3. SCROLL REVEAL
+    // ─────────────────────────────────────────
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ─────────────────────────────────────────
+    // 4. FLOATING PETALS
+    // ─────────────────────────────────────────
+    const petalsContainer = document.getElementById('petals-container');
+    const petalColors = ['#FFD97D', '#F5C6C6', '#D4E4CC', '#FFE0E0', '#FFF3D0'];
+
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+      const size = Math.random() * 8 + 4;
+      const color = petalColors[Math.floor(Math.random() * petalColors.length)];
+      const left = Math.random() * 100;
+      const duration = Math.random() * 8 + 10;
+      const delay = Math.random() * 5;
+
+      petal.style.cssText = `
+        width: ${size}px; height: ${size}px;
+        background: ${color};
+        border-radius: 50% 0 50% 50%;
+        left: ${left}%;
+        animation-duration: ${duration}s;
+        animation-delay: ${delay}s;
+      `;
+
+      petalsContainer.appendChild(petal);
+      setTimeout(() => { petal.remove(); }, (duration + delay) * 1000);
+    }
+
+    for (let i = 0; i < 12; i++) {
+      setTimeout(() => createPetal(), i * 400);
+    }
+    setInterval(createPetal, 2500);
+
+    // ─────────────────────────────────────────
+    // 5. NAVBAR SCROLL EFFECT
+    // ─────────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.classList.add('shadow-md', 'shadow-gold-200/10');
+      } else {
+        navbar.classList.remove('shadow-md', 'shadow-gold-200/10');
+      }
+    }, { passive: true });
+
+    // ─────────────────────────────────────────
+    // 6. CONFETTI (celebration mode)
+    // ─────────────────────────────────────────
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const confettiPieces = [];
+      const colors = ['#D4A745', '#FFD97D', '#F5C451', '#F5C6C6', '#FF6B6B', '#6BCB77', '#4D96FF'];
+
+      for (let i = 0; i < 150; i++) {
+        confettiPieces.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          w: Math.random() * 10 + 5,
+          h: Math.random() * 6 + 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          speedY: Math.random() * 3 + 2,
+          speedX: (Math.random() - 0.5) * 2,
+          rotation: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 10,
+          opacity: 1,
+        });
+      }
+
+      let frame = 0;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = false;
+
+        confettiPieces.forEach(p => {
+          if (p.opacity <= 0) return;
+          active = true;
+          p.y += p.speedY;
+          p.x += p.speedX;
+          p.rotation += p.rotSpeed;
+          if (p.y > canvas.height) p.opacity -= 0.02;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.globalAlpha = p.opacity;
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+
+        frame++;
+        if (active && frame < 400) {
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+
+      animate();
+
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    }
+  </script>
 </body>
 </html>
