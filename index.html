@@ -137,12 +137,14 @@
       background: linear-gradient(90deg, #B8860B 0%, #D4A745 40%, #F5C451 100%);
       border-radius: 16px;
       transform-origin: left center;
-      animation: flapOpen 1.8s ease-in-out 1s forwards;
       z-index: 2;
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: -4px 0 20px rgba(139, 105, 20, 0.2);
+    }
+    #card-overlay.is-open .card-flap {
+      animation: flapOpen 1.8s ease-in-out forwards;
     }
 
     .card-flap::before {
@@ -189,7 +191,9 @@
       font-family: 'Great Vibes', cursive;
       font-size: 1.8rem;
       color: #FFFDF7;
-      animation: sealBreak 0.5s ease-in-out 1s forwards;
+    }
+    #card-overlay.is-open .card-seal {
+      animation: sealBreak 0.5s ease-in-out forwards;
     }
 
     @keyframes sealBreak {
@@ -213,7 +217,9 @@
     .card-content-rise {
       opacity: 0;
       transform: translateY(40px) scale(0.9);
-      animation: contentRise 1.2s ease-out 2.2s forwards;
+    }
+    #card-overlay.is-open .card-content-rise {
+      animation: contentRise 1.2s ease-out 1.2s forwards;
     }
 
     @keyframes contentRise {
@@ -235,7 +241,9 @@
       height: 6px;
       border-radius: 50%;
       opacity: 0;
-      animation: particleBurst 1.5s ease-out 1.8s forwards;
+    }
+    #card-overlay.is-open .card-particle {
+      animation: particleBurst 1.5s ease-out 0.8s forwards;
     }
 
     @keyframes particleBurst {
@@ -508,11 +516,10 @@
     }
     /* ── Guest welcome text on card ── */
     .guest-welcome {
-      opacity: 0;
-      animation: guestFadeIn 1s ease-out 2.6s forwards;
+      animation: guestFadeIn 1.2s ease-out forwards;
     }
     @keyframes guestFadeIn {
-      0%   { opacity: 0; transform: translateY(10px); }
+      0%   { opacity: 0; transform: translateY(-10px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
@@ -717,17 +724,14 @@
           <div class="w-16 h-px bg-white/40 mx-auto mb-3"></div>
           <p class="text-sm opacity-90" style="font-family:'Playfair Display',serif">May 6, 2026</p>
           <p class="text-xs opacity-70 mt-1 mb-4" style="font-family:'Inter',sans-serif">RR Gardens, Godhavarikhani</p>
-          
-          <!-- Guest welcome (hidden unless ?name= is present) -->
-          <div class="mt-2 pt-2 border-t border-white/20">
-            <p id="guest-welcome" class="guest-welcome font-script text-3xl sm:text-4xl text-gold-300 drop-shadow-md" style="font-family:'Great Vibes',cursive; display:none;"></p>
-          </div>
         </div>
       </div>
 
       <!-- Front flap with seal -->
-      <div class="card-flap">
-        <div class="card-seal">S&S</div>
+      <div class="card-flap flex-col gap-4 cursor-pointer group" id="open-card-btn">
+        <div class="card-seal group-hover:scale-110 transition-transform duration-300 mb-2">S&S</div>
+        <p id="guest-welcome" class="guest-welcome font-script text-4xl sm:text-5xl text-white drop-shadow-md px-4 text-center" style="font-family:'Great Vibes',cursive; display:none;"></p>
+        <div id="tap-to-open-text" class="text-white/90 text-xs font-medium tracking-[0.2em] uppercase animate-pulse drop-shadow-md">Tap to Open</div>
       </div>
 
       <!-- Burst particles -->
@@ -764,14 +768,25 @@
         </a>
       </div>
 
-      <!-- Language Toggle -->
-      <button id="lang-toggle"
-        class="lang-btn flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold tracking-wide select-none"
-        aria-label="Toggle Language">
-        <span id="lang-label">EN</span>
-        <span class="sep">|</span>
-        <span id="lang-label-alt" class="alt-text font-medium">తె</span>
-      </button>
+      <!-- Controls: Mute & Language Toggle -->
+      <div class="flex items-center gap-2">
+        <button id="mute-toggle" class="lang-btn flex items-center justify-center w-[32px] h-[32px] rounded-full" aria-label="Toggle Music">
+          <svg id="icon-music-on" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.5 10H1.5v4h4l5 5V5l-5 5z" />
+          </svg>
+          <svg id="icon-music-off" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5.5 10H1.5v4h4l5 5V5l-5 5zM17 14l-4-4m0 4l4-4" />
+          </svg>
+        </button>
+        <!-- Language Toggle -->
+        <button id="lang-toggle"
+          class="lang-btn flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold tracking-wide select-none"
+          aria-label="Toggle Language">
+          <span id="lang-label">EN</span>
+          <span class="sep">|</span>
+          <span id="lang-label-alt" class="alt-text font-medium">తె</span>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -1172,6 +1187,11 @@
 
   <canvas id="confetti-canvas"></canvas>
 
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="jodha_akbar.mp3" type="audio/mpeg">
+  </audio>
+
   <!-- ════════════════════════════════════════════
        JAVASCRIPT
   ════════════════════════════════════════════ -->
@@ -1180,8 +1200,26 @@
     // 0. WEDDING CARD OPENING ANIMATION
     // ─────────────────────────────────────────
     // ─────────────────────────────────────────
-    // 0a. GUEST NAME FROM URL
+    // 0a. AUDIO PLAYER & GUEST NAME FROM URL
     // ─────────────────────────────────────────
+    const bgMusic = document.getElementById('bg-music');
+    const muteToggle = document.getElementById('mute-toggle');
+    const iconMusicOn = document.getElementById('icon-music-on');
+    const iconMusicOff = document.getElementById('icon-music-off');
+    
+    muteToggle.addEventListener('click', () => {
+      if (bgMusic.muted) {
+        bgMusic.muted = false;
+        bgMusic.play().catch(() => {});
+        iconMusicOn.classList.remove('hidden');
+        iconMusicOff.classList.add('hidden');
+      } else {
+        bgMusic.muted = true;
+        iconMusicOn.classList.add('hidden');
+        iconMusicOff.classList.remove('hidden');
+      }
+    });
+
     const urlParams = new URLSearchParams(window.location.search);
     const guestName = urlParams.get('name');
 
@@ -1192,6 +1230,8 @@
     }
 
     const overlay = document.getElementById('card-overlay');
+    const openCardBtn = document.getElementById('open-card-btn');
+    const tapText = document.getElementById('tap-to-open-text');
 
     function dismissCard() {
       overlay.classList.add('fade-out');
@@ -1206,8 +1246,18 @@
     // Prevent scrolling while card is visible
     document.body.style.overflow = 'hidden';
 
-    // Give extra time if guest name is present so they can read it
-    setTimeout(dismissCard, guestName ? 5200 : 4200);
+    // Wait for user to tap before starting animation and music
+    openCardBtn.addEventListener('click', () => {
+      // Play audio right when they tap
+      bgMusic.play().catch(() => {});
+
+      if (tapText) tapText.style.display = 'none';
+      overlay.classList.add('is-open');
+      openCardBtn.style.pointerEvents = 'none'; // prevent double taps
+      
+      // Dismiss card after animations finish
+      setTimeout(dismissCard, guestName ? 4200 : 3200);
+    });
 
     // ─────────────────────────────────────────
     // 1. LANGUAGE TOGGLE
